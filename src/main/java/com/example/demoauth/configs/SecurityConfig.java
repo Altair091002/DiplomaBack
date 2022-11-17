@@ -4,7 +4,6 @@ import com.example.demoauth.jwt.AuthEntryPointJwt;
 import com.example.demoauth.jwt.JWTFilter;
 import com.example.demoauth.service.PersonDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,8 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests()
-				.antMatchers("/api/auth/**").permitAll()
-				.antMatchers("/api/main/**").permitAll()
+				.antMatchers("/api/auth/signin", "/api/auth/signup", "/api/main/all").permitAll()
 				.anyRequest().authenticated();
 
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

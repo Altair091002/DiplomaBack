@@ -1,6 +1,7 @@
 package com.example.demoauth.jwt;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
 import com.example.demoauth.service.PersonDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -28,15 +30,14 @@ public class JWTFilter extends OncePerRequestFilter {
 			String jwt = authHeader.substring(7);
 			if (!jwt.isBlank()) {
 				try {
-					String username = jwtUtil.validateTokenAndRetrieveClaim(jwt);
+					Map<String, Claim> jwtClaims = jwtUtil.validateTokenAndRetrieveClaims(jwt);
 					if (SecurityContextHolder.getContext().getAuthentication() == null){
-						UserDetails userDetails = personDetailService.loadUserByUsername(username);
+						UserDetails userDetails = personDetailService.loadUserByUsername(jwtClaims.get("username").asString());
 						UsernamePasswordAuthenticationToken authToken =
 								new UsernamePasswordAuthenticationToken(userDetails, userDetails.getUsername(), userDetails.getAuthorities());
 						SecurityContextHolder.getContext().setAuthentication(authToken);
 					}
 				} catch (JWTVerificationException exception) {
-//					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "invalid jwt token");
 					System.out.println("filter exception " + exception);
 				}
 			}

@@ -1,7 +1,6 @@
 package com.example.demoauth.jwt;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
@@ -15,6 +14,10 @@ import com.example.demoauth.models.Person;
 public class PersonDetailsImpl implements UserDetails {
 
 	private final Person person;
+
+	public Person getPerson() {
+		return person;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

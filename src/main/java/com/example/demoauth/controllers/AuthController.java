@@ -1,8 +1,6 @@
 package com.example.demoauth.controllers;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.demoauth.models.Person;
@@ -15,11 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demoauth.jwt.JwtUtil;
 import com.example.demoauth.models.ERole;
@@ -45,7 +39,6 @@ public class AuthController {
 	
 	@PostMapping("/signin")
 	public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest) {
-
 		Authentication authentication = null;
 
 		try {
@@ -63,11 +56,8 @@ public class AuthController {
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.toList());
 
-		String jwt = jwtUtil.generateToken(personDetails.getUsername());
-		
-		return ResponseEntity.ok(new JwtResponse(jwt, 
-				personDetails.getUsername(),
-				roles));
+		String jwt = jwtUtil.generateToken(personDetails.getUsername(), roles);
+		return ResponseEntity.ok(new JwtResponse(jwt));
 	}
 	
 	@PostMapping("/signup")
@@ -125,5 +115,11 @@ public class AuthController {
 		person.setRoles(roles);
 		personRepository.save(person);
 		return ResponseEntity.ok(new MessageResponse("User CREATED"));
+	}
+
+	private Person userDetails(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		PersonDetailsImpl principal = (PersonDetailsImpl) authentication.getPrincipal();
+		return principal.getPerson();
 	}
 }
