@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts/")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 180)
 public class PostController {
 
     @Autowired
