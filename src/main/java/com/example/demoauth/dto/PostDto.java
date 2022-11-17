@@ -3,11 +3,14 @@ package com.example.demoauth.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data @NoArgsConstructor
 public class PostDto {
     private Long id;
     private String content;
     private String title;
+    private Date createdOn;
     private String username;
 
 //    public Long getId() {
