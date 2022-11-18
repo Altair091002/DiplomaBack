@@ -2,6 +2,7 @@ package com.example.demoauth.controllers;
 
 import com.example.demoauth.dto.PostDto;
 import com.example.demoauth.service.PostService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,15 @@ public class PostController {
     @GetMapping("/get/{id}")
     public ResponseEntity<PostDto> getSinglePost(@PathVariable @RequestBody Long id) {
         return new ResponseEntity<>(postService.readSinglePost(id), HttpStatus.OK);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<HttpStatus> updatePost(@PathVariable Long id, @RequestBody PostDto postDto) {
+        postService.updatedPost(id, postDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @DeleteMapping ("/{id}")
+    public ResponseEntity<HttpStatus> deletePost(@PathVariable Long id){
+        postService.deletePost(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

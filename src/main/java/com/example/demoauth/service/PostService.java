@@ -35,6 +35,22 @@ public class PostService {
     }
 
     @Transactional
+    public void updatedPost(Long id, PostDto postDto) {
+        Post post = postRepository.findById(id).get();
+        post.setContent(postDto.getContent());
+        post.setTitle(postDto.getTitle());
+        post.setUsername(postDto.getUsername());
+        post.setCreatedOn(postDto.getCreatedOn());
+        postRepository.save(post);
+    }
+
+    @Transactional
+    public void deletePost(Long id) {
+        postRepository.deleteById(id);
+    }
+
+
+    @Transactional
     public PostDto readSinglePost(Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new PostNotFoundException("For id " + id));
         return mapFromPostToDto(post);
@@ -53,10 +69,11 @@ public class PostService {
         Post post = new Post();
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
-        User loggedInUser = (User) authService.getCurrentUser().orElseThrow(() -> new IllegalArgumentException("User Not Found"));
+//        User loggedInUser = (User) authService.getCurrentUser().orElseThrow(() -> new IllegalArgumentException("User Not Found"));
         post.setCreatedOn(Instant.now());
-        post.setUsername(loggedInUser.getUsername());
+        post.setUsername(postDto.getUsername());
         post.setUpdatedOn(Instant.now());
         return post;
     }
+
 }
