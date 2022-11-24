@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/feedbacker</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="fizmath@localhost" uuid="60d00652-92ac-4476-834b-e5739c387d80">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5439/fizmath</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

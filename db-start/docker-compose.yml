@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  db:
+    image: 'postgres:13.1-alpine'
+    ports:
+      - 5439:5432
+    container_name: diploma-fizmath-db
+    environment:
+      - POSTGRES_USER=fizmath
+      - POSTGRES_PASSWORD=fizmath
+      - POSTGRES_DB=fizmath
