@@ -40,18 +40,13 @@ public class AuthController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest) {
 		Authentication authentication = null;
-		System.out.println(loginRequest);
-		System.out.println("1");
 		try {
-			System.out.println("2");
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 							loginRequest.getUsername(),
 							loginRequest.getPassword()));
 		} catch (BadCredentialsException e){
-			System.out.println("3");
 			return ResponseEntity.badRequest().body("incorrect credentials");
 		}
-		System.out.println("4");
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		PersonDetailsImpl personDetails = (PersonDetailsImpl) authentication.getPrincipal();
 		List<String> roles = personDetails.getAuthorities().stream()
@@ -59,6 +54,7 @@ public class AuthController {
 				.collect(Collectors.toList());
 
 		String jwt = jwtUtil.generateToken(personDetails.getUsername(), roles);
+		System.out.println(jwt);
 		return ResponseEntity.ok(new JwtResponse(jwt, personDetails.getUsername(), personDetails.getEmail()));
 	}
 	
