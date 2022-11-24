@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 180)
 public class ClientController {
     @GetMapping("/info")
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public User info() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetailsImpl principal = (PersonDetailsImpl) authentication.getPrincipal();

@@ -54,8 +54,7 @@ public class AuthController {
 				.collect(Collectors.toList());
 
 		String jwt = jwtUtil.generateToken(personDetails.getUsername(), roles);
-		System.out.println(jwt);
-		return ResponseEntity.ok(new JwtResponse(jwt, personDetails.getUsername(), personDetails.getEmail()));
+		return ResponseEntity.ok(new JwtResponse(jwt));
 	}
 	
 	@PostMapping("/signup")
@@ -101,11 +100,5 @@ public class AuthController {
 		user.setRoles(roles);
 		userRepository.save(user);
 		return ResponseEntity.ok(new MessageResponse("User CREATED"));
-	}
-
-	private User userDetails(){
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		PersonDetailsImpl principal = (PersonDetailsImpl) authentication.getPrincipal();
-		return principal.getUser();
 	}
 }

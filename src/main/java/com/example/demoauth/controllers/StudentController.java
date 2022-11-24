@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
     private final StudentService studentService;
 
+//    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{id}/status/{status}")
-    @PreAuthorize("hasRole('USER')")
     public void status(@PathVariable Long id, @PathVariable String status) {
-        studentService.updateStatus(id, status);
+        System.out.println(id);
+        System.out.println(status);
+        System.out.println(studentService.userDetails());
+//        studentService.updateStatus(id1, status);
     }
 }
