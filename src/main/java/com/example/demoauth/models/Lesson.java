@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Data @NoArgsConstructor
+@Data
+@NoArgsConstructor
 @Table(name= "lesson")
 public class Lesson {
     @Id
