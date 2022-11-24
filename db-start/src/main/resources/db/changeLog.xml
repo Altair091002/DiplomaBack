@@ -16,4 +16,7 @@
     <changeSet author="Altair" id="3">
         <sqlFile path="classpath:/db/security/24.11.2022_insert_roles.sql" relativeToChangelogFile="false" splitStatements="true"/>
     </changeSet>
+    <changeSet author="Altair" id="4">
+        <sqlFile path="classpath:/db/security/24.11.2022_table_student.sql" relativeToChangelogFile="false" splitStatements="true"/>
+    </changeSet>
 </databaseChangeLog>

@@ -60,14 +60,11 @@ public class AuthController {
 	
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
-		System.out.println(signupRequest);
-		System.out.println("1");
 		if (userRepository.existsByUsername(signupRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: Username is exist"));
 		}
-		System.out.println("2");
 		if (userRepository.existsByEmail(signupRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
@@ -77,9 +74,8 @@ public class AuthController {
 		User user = new User(signupRequest.getUsername(),
 				signupRequest.getEmail(),
 				passwordEncoder.encode(signupRequest.getPassword()));
-		System.out.println("user: " + user);
+
 		Set<String> reqRoles = signupRequest.getRoles();
-		System.out.println("reqRoles: " + reqRoles);
 		Set<Role> roles = new HashSet<>();
 		
 		if (reqRoles == null) {
@@ -102,7 +98,6 @@ public class AuthController {
 				}
 			});
 		}
-		System.out.println("roles: " + roles);
 		user.setRoles(roles);
 		userRepository.save(user);
 		return ResponseEntity.ok(new MessageResponse("User CREATED"));
