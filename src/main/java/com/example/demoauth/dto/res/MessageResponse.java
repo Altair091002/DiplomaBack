@@ -1,4 +1,4 @@
-package com.example.demoauth.pojo.res;
+package com.example.demoauth.dto.res;
 
 import lombok.Data;
 

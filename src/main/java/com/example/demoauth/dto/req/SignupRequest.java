@@ -1,4 +1,4 @@
-package com.example.demoauth.pojo.req;
+package com.example.demoauth.dto.req;
 
 import lombok.Data;
 

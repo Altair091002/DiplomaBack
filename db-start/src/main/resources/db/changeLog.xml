@@ -7,16 +7,19 @@
    http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet author="Kairuddin" id="1">
-        <sqlFile path="classpath:/db/security/17.11.2022_init_security.sql" relativeToChangelogFile="false" splitStatements="true"/>
+    <changeSet author="Altair" id="5">
+        <sqlFile path="classpath:/db/security/24.11.2022_rename_group_table.sql" relativeToChangelogFile="false" splitStatements="true"/>
     </changeSet>
-    <changeSet author="Kairuddin" id="2">
-        <sqlFile path="classpath:/db/security/24.11.2022_init_security.sql" relativeToChangelogFile="false" splitStatements="true"/>
+    <changeSet author="Altair" id="4">
+        <sqlFile path="classpath:/db/security/24.11.2022_table_student.sql" relativeToChangelogFile="false" splitStatements="true"/>
     </changeSet>
     <changeSet author="Altair" id="3">
         <sqlFile path="classpath:/db/security/24.11.2022_insert_roles.sql" relativeToChangelogFile="false" splitStatements="true"/>
     </changeSet>
-    <changeSet author="Altair" id="4">
-        <sqlFile path="classpath:/db/security/24.11.2022_table_student.sql" relativeToChangelogFile="false" splitStatements="true"/>
+    <changeSet author="Kairuddin" id="2">
+        <sqlFile path="classpath:/db/security/24.11.2022_init_security.sql" relativeToChangelogFile="false" splitStatements="true"/>
+    </changeSet>
+    <changeSet author="Kairuddin" id="1">
+        <sqlFile path="classpath:/db/security/17.11.2022_init_security.sql" relativeToChangelogFile="false" splitStatements="true"/>
     </changeSet>
 </databaseChangeLog>
