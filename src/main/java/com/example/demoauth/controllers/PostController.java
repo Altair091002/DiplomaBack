@@ -1,8 +1,7 @@
 package com.example.demoauth.controllers;
 
-import com.example.demoauth.dto.PostDto;
-import com.example.demoauth.service.PostService;
-import lombok.extern.java.Log;
+import com.example.demoauth.dto.LessonDTO;
+import com.example.demoauth.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,31 +15,31 @@ import java.util.List;
 public class PostController {
 
     @Autowired
-    private PostService postService;
+    private LessonService lessonService;
 
     @PostMapping
-    public ResponseEntity createPost(@RequestBody PostDto postDto) {
-        postService.createPost(postDto);
+    public ResponseEntity createPost(@RequestBody LessonDTO lessonDTO) {
+        lessonService.createPost(lessonDTO);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PostDto>> showAllPosts() {
-        return new ResponseEntity<>(postService.showAllPosts(), HttpStatus.OK);
+    public ResponseEntity<List<LessonDTO>> showAllPosts() {
+        return new ResponseEntity<>(lessonService.showAllPosts(), HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<PostDto> getSinglePost(@PathVariable @RequestBody Long id) {
-        return new ResponseEntity<>(postService.readSinglePost(id), HttpStatus.OK);
+    public ResponseEntity<LessonDTO> getSinglePost(@PathVariable @RequestBody Long id) {
+        return new ResponseEntity<>(lessonService.readSinglePost(id), HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<HttpStatus> updatePost(@PathVariable Long id, @RequestBody PostDto postDto) {
-        postService.updatedPost(id, postDto);
+    public ResponseEntity<HttpStatus> updatePost(@PathVariable Long id, @RequestBody LessonDTO lessonDTO) {
+        lessonService.updatedPost(id, lessonDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @DeleteMapping ("/{id}")
     public ResponseEntity<HttpStatus> deletePost(@PathVariable Long id){
-        postService.deletePost(id);
+        lessonService.deletePost(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

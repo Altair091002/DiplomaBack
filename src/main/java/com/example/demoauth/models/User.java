@@ -1,6 +1,7 @@
 package com.example.demoauth.models;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,13 +18,13 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Data
-@Table(name = "person",
+@Data @NoArgsConstructor
+@Table(name = "user",
 		uniqueConstraints = {
 				@UniqueConstraint(columnNames = "username"),
 				@UniqueConstraint(columnNames = "email")
 		})
-public class Person {
+public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,16 +34,13 @@ public class Person {
 	private String email;
 	private String password;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "person_role",
-				joinColumns = @JoinColumn(name = "person_id"),
+	@ManyToMany()
+	@JoinTable(name = "user_role",
+				joinColumns = @JoinColumn(name = "user_id"),
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	public Person() {
-	}
-
-	public Person(String username, String email, String password) {
+	public User(String username, String email, String password) {
 		this.username = username;
 		this.email = email;
 		this.password = password;

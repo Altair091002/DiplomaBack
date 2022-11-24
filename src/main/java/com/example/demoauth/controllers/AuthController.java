@@ -3,7 +3,7 @@ package com.example.demoauth.controllers;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.example.demoauth.models.Person;
+import com.example.demoauth.models.User;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +23,7 @@ import com.example.demoauth.pojo.req.LoginRequest;
 import com.example.demoauth.pojo.res.MessageResponse;
 import com.example.demoauth.pojo.req.SignupRequest;
 import com.example.demoauth.repository.RoleRepository;
-import com.example.demoauth.repository.PersonRepository;
+import com.example.demoauth.repository.UserRepository;
 import com.example.demoauth.jwt.PersonDetailsImpl;
 
 @RestController
@@ -32,7 +32,7 @@ import com.example.demoauth.jwt.PersonDetailsImpl;
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 180)
 public class AuthController {
 	private final AuthenticationManager authenticationManager;
-	private final PersonRepository personRepository;
+	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtUtil jwtUtil;
@@ -40,17 +40,19 @@ public class AuthController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest) {
 		Authentication authentication = null;
-
+		System.out.println(loginRequest);
+		System.out.println("1");
 		try {
+			System.out.println("2");
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 							loginRequest.getUsername(),
 							loginRequest.getPassword()));
 		} catch (BadCredentialsException e){
-            return ResponseEntity.badRequest().body("incorrect credentials");
-        }
-
+			System.out.println("3");
+			return ResponseEntity.badRequest().body("incorrect credentials");
+		}
+		System.out.println("4");
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-
 		PersonDetailsImpl personDetails = (PersonDetailsImpl) authentication.getPrincipal();
 		List<String> roles = personDetails.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
@@ -63,19 +65,19 @@ public class AuthController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
 		
-		if (personRepository.existsByUsername(signupRequest.getUsername())) {
+		if (userRepository.existsByUsername(signupRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: Username is exist"));
 		}
 		
-		if (personRepository.existsByEmail(signupRequest.getEmail())) {
+		if (userRepository.existsByEmail(signupRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: Email is exist"));
 		}
 		
-		Person person = new Person(signupRequest.getUsername(),
+		User user = new User(signupRequest.getUsername(),
 				signupRequest.getEmail(),
 				passwordEncoder.encode(signupRequest.getPassword()));
 		
@@ -89,37 +91,27 @@ public class AuthController {
 			roles.add(userRole);
 		} else {
 			reqRoles.forEach(r -> {
-				switch (r) {
-				case "admin":
+				if ("admin".equals(r)) {
 					Role adminRole = roleRepository
-						.findByName(ERole.ROLE_ADMIN)
-						.orElseThrow(() -> new RuntimeException("Error, Role ADMIN is not found"));
+							.findByName(ERole.ROLE_ADMIN)
+							.orElseThrow(() -> new RuntimeException("Error, Role ADMIN is not found"));
 					roles.add(adminRole);
-					break;
-
-				case "moderator":
-					Role modRole = roleRepository
-						.findByName(ERole.ROLE_MODERATOR)
-						.orElseThrow(() -> new RuntimeException("Error, Role MODERATOR is not found"));
-					roles.add(modRole);
-					break;
-
-				default:
+				} else {
 					Role userRole = roleRepository
-						.findByName(ERole.ROLE_USER)
-						.orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
+							.findByName(ERole.ROLE_USER)
+							.orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
 					roles.add(userRole);
 				}
 			});
 		}
-		person.setRoles(roles);
-		personRepository.save(person);
+		user.setRoles(roles);
+		userRepository.save(user);
 		return ResponseEntity.ok(new MessageResponse("User CREATED"));
 	}
 
-	private Person userDetails(){
+	private User userDetails(){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		PersonDetailsImpl principal = (PersonDetailsImpl) authentication.getPrincipal();
-		return principal.getPerson();
+		return principal.getUser();
 	}
 }

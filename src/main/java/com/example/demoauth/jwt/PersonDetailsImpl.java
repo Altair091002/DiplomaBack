@@ -8,36 +8,36 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.example.demoauth.models.Person;
+import com.example.demoauth.models.User;
 
 @RequiredArgsConstructor
 public class PersonDetailsImpl implements UserDetails {
 
-	private final Person person;
+	private final User user;
 
-	public Person getPerson() {
-		return person;
+	public User getUser() {
+		return user;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return person.getRoles().stream()
+		return user.getRoles().stream()
 						.map(role -> new SimpleGrantedAuthority(role.getName().name()))
 						.collect(Collectors.toList());
 	}
 
 	@Override
 	public String getPassword() {
-		return person.getPassword();
+		return user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return person.getUsername();
+		return user.getUsername();
 	}
 
 	public String getEmail() {
-		return person.getEmail();
+		return user.getEmail();
 	}
 
 	@Override

@@ -1,35 +1,29 @@
 package com.example.demoauth.service;
 
 import com.example.demoauth.jwt.PersonDetailsImpl;
-import com.example.demoauth.models.Person;
+import com.example.demoauth.models.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.demoauth.repository.PersonRepository;
+import com.example.demoauth.repository.UserRepository;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-@Service @RequiredArgsConstructor
+@Service
+@RequiredArgsConstructor
 public class PersonDetailsServiceImpl implements UserDetailsService {
-	private final PersonRepository personRepository;
+	private final UserRepository userRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<Person> person = personRepository.findByUsername(username);
-		if (person.isEmpty())
+		Optional<User> user = userRepository.findByUsername(username);
+		if (user.isEmpty())
 			throw new UsernameNotFoundException("Пользователь не найден");
-		return new PersonDetailsImpl(person.get());
-	}
-
-	public Optional<Object> getCurrentUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return (Optional<Object>) authentication.getPrincipal();
+		return new PersonDetailsImpl(user.get());
 	}
 }

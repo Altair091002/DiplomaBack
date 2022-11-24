@@ -1,7 +1,7 @@
 package com.example.demoauth.controllers;
 
 import com.example.demoauth.jwt.PersonDetailsImpl;
-import com.example.demoauth.models.Person;
+import com.example.demoauth.models.User;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientController {
     @GetMapping("/info")
     @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-    public Person info() {
+    public User info() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PersonDetailsImpl principal = (PersonDetailsImpl) authentication.getPrincipal();
-        return principal.getPerson();
+        return principal.getUser();
     }
 }
