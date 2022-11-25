@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-11-24T17:15:19+0600",
+    date = "2022-11-25T09:24:17+0600",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.4.1 (Oracle Corporation)"
 )
 @Component
@@ -40,6 +40,7 @@ public class LessonsMapperImpl implements LessonsMapper {
         lessonDTO.setId( lesson.getId() );
         lessonDTO.setTitle( lesson.getTitle() );
         lessonDTO.setContent( lesson.getContent() );
+        lessonDTO.setCompleted( lesson.getCompleted() );
         lessonDTO.setCreatedOn( lesson.getCreatedOn() );
         lessonDTO.setUpdatedOn( lesson.getUpdatedOn() );
 
@@ -57,6 +58,7 @@ public class LessonsMapperImpl implements LessonsMapper {
         lesson.setId( dto.getId() );
         lesson.setTitle( dto.getTitle() );
         lesson.setContent( dto.getContent() );
+        lesson.setCompleted( dto.getCompleted() );
         lesson.setCreatedOn( dto.getCreatedOn() );
         lesson.setUpdatedOn( dto.getUpdatedOn() );
 

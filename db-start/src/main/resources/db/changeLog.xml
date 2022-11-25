@@ -7,6 +7,9 @@
    http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
+    <changeSet author="Altair" id="6">
+        <sqlFile path="classpath:/db/security/25.11.2022_add_lesson_completed.sql" relativeToChangelogFile="false" splitStatements="true"/>
+    </changeSet>
     <changeSet author="Altair" id="5">
         <sqlFile path="classpath:/db/security/24.11.2022_rename_group_table.sql" relativeToChangelogFile="false" splitStatements="true"/>
     </changeSet>
