@@ -10,6 +10,8 @@ public class LessonDTO {
     private Long id;
     private String title;
     private String content;
+    private String completed;
+    private String category;
     private Instant createdOn;
     private Instant updatedOn;
 }
