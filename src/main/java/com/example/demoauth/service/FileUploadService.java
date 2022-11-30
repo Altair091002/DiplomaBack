@@ -9,6 +9,6 @@ import java.io.IOException;
 @Service
 public class FileUploadService {
     public void uploadFile(MultipartFile multipartFile) throws IOException {
-        multipartFile.transferTo(new File("/Users/macbook/Documents/Java/Spring/spring-jwt-realization/src/main/resources/static/files" + multipartFile.getOriginalFilename()));
+        multipartFile.transferTo(new File("C:\\Users\\77074\\Desktop\\Diploma Project\\backdemo\\DiplomaBack\\src\\main\\resources\\static\\files\\" + multipartFile.getOriginalFilename()));
     }
 }

@@ -1,6 +1,8 @@
 package com.example.demoauth.controllers;
 
 import com.example.demoauth.service.FileUploadService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +19,10 @@ public class FileUploadController {
     }
 
     @PostMapping
-    public void uploadFile(@RequestParam("file")MultipartFile multipartFile) throws IOException {
+    public ResponseEntity uploadFile(@RequestParam("file")MultipartFile multipartFile) throws IOException {
+        System.out.println("This File: ");
+        System.out.println("This File: " + multipartFile);
         fileUploadService.uploadFile(multipartFile);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
