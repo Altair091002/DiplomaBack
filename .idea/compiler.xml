@@ -27,7 +27,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="DiplomaBack" options="-parameters" />
-      <module name="db-start" options="-parameters" />
+      <module name="db-start" options="" />
       <module name="demoauth" options="-parameters" />
       <module name="spring-jwt-realization" options="-parameters" />
     </option>
