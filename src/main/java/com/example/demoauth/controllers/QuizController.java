@@ -3,8 +3,11 @@ package com.example.demoauth.controllers;
 import com.example.demoauth.models.exam.Category;
 import com.example.demoauth.models.exam.Quiz;
 import com.example.demoauth.service.QuizService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,9 +15,12 @@ import java.util.List;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/quiz")
+@RequiredArgsConstructor
 public class QuizController {
     @Autowired
     private QuizService quizService;
+
+
 
     //add quiz service
     @PostMapping("/")

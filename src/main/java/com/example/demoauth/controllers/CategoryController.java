@@ -4,6 +4,7 @@ import com.example.demoauth.models.exam.Category;
 import com.example.demoauth.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,11 +14,18 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private final KafkaTemplate<String, String > kafkaTemplate;
+
+    public CategoryController(KafkaTemplate<String, String> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
     //add category
     @PostMapping("/")
     public ResponseEntity<Category> addCategory(@RequestBody Category category) {
         Category category1 = this.categoryService.addCategory(category);
+        kafkaTemplate.send("mytopic", category.getTitle());
         return ResponseEntity.ok(category1);
     }
 
